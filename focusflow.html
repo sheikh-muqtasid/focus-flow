@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FocusFlow AI - AI-Powered Focus Tracker for Developers</title>
+    <meta name="description" content="FocusFlow AI tracks your focus time, blocks distractions, and provides AI-based insights to help developers achieve deep work.">
+    
+    <!-- OpenGraph Tags -->
+    <meta property="og:title" content="FocusFlow AI - Master Your Deep Work">
+    <meta property="og:description" content="The ultimate productivity tool for developers. Auto-track your focus time and let AI optimize your workflow.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://focusflow.ai">
+    <meta property="og:image" content="https://focusflow.ai/og-image.jpg">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0fdfa',
+                            100: '#ccfbf1',
+                            200: '#99f6e4',
+                            500: '#14b8a6', // Teal
+                            600: '#0d9488',
+                            900: '#134e4a',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Theme Script to prevent FOUC -->
+    <script>
+        // On page load or when changing themes, best to add inline in `head` to avoid FOUC
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark')
+        }
+    </script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="font-sans text-gray-800 dark:text-gray-200 antialiased bg-gray-50 dark:bg-gray-900 selection:bg-brand-500 selection:text-white transition-colors duration-300">
+
+<!-- Navbar -->
+<header class="fixed w-full top-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-100 dark:border-gray-800 transition-colors duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 bg-brand-500 rounded-lg flex items-center justify-center text-white font-bold text-xl">F</div>
+                <span class="font-bold text-xl tracking-tight text-gray-900 dark:text-white">FocusFlow AI</span>
+            </div>
+            
+            <!-- Desktop Nav -->
+            <nav class="hidden md:flex items-center gap-8">
+                <a href="#features" class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors">Features</a>
+                <a href="#how-it-works" class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors">How it Works</a>
+                <a href="#demo" class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors">Demo</a>
+                <a href="#pricing" class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors">Pricing</a>
+            </nav>
+
+            <div class="hidden md:flex items-center gap-4">
+                <button id="theme-toggle" type="button" class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none rounded-lg text-sm p-2.5">
+                    <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                    <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+                </button>
+                <a href="#" class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">Log in</a>
+                <a href="#" class="text-sm font-medium bg-gray-900 dark:bg-white text-white dark:text-gray-900 px-4 py-2 rounded-lg hover:bg-gray-800 dark:hover:bg-gray-100 transition-colors">Get Started Free</a>
+            </div>
+
+            <!-- Mobile menu buttons -->
+            <div class="flex items-center gap-2 md:hidden">
+                <button id="theme-toggle-mobile" type="button" class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none rounded-lg text-sm p-2.5">
+                    <svg id="theme-toggle-dark-icon-mobile" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                    <svg id="theme-toggle-light-icon-mobile" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+                </button>
+                <button id="mobile-menu-btn" aria-label="Toggle Menu" class="p-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Nav Content -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800 px-4 py-4 space-y-4 shadow-lg absolute w-full transition-colors duration-300">
+        <a href="#features" class="block text-sm font-medium text-gray-600 dark:text-gray-300">Features</a>
+        <a href="#how-it-works" class="block text-sm font-medium text-gray-600 dark:text-gray-300">How it Works</a>
+        <a href="#demo" class="block text-sm font-medium text-gray-600 dark:text-gray-300">Demo</a>
+        <a href="#pricing" class="block text-sm font-medium text-gray-600 dark:text-gray-300">Pricing</a>
+        <hr class="border-gray-100 dark:border-gray-800 my-2">
+        <a href="#" class="block text-sm font-medium text-gray-600 dark:text-gray-300">Log in</a>
+        <a href="#" class="block text-center text-sm font-medium bg-gray-900 dark:bg-white text-white dark:text-gray-900 px-4 py-2 rounded-lg">Get Started Free</a>
+    </div>
+</header>
+
+<!-- Hero Section -->
+<section class="pt-32 pb-20 lg:pt-48 lg:pb-32 px-4 overflow-hidden relative">
+    <!-- Subtle dark mode bg glow -->
+    <div class="hidden dark:block absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-brand-900/20 via-gray-900 to-gray-900 z-0 pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto text-center relative z-10">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-50 dark:bg-brand-500/10 text-brand-600 dark:text-brand-400 text-sm font-medium mb-6 border border-brand-100 dark:border-brand-500/20">
+            <span class="flex h-2 w-2 relative">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-500 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-500"></span>
+            </span>
+            FocusFlow v2.0 is out now
+        </div>
+        <h1 class="text-5xl lg:text-7xl font-bold tracking-tight text-gray-900 dark:text-white mb-6 max-w-4xl mx-auto leading-tight">
+            Master your deep work with <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 to-brand-400">AI insights</span>
+        </h1>
+        <p class="text-xl text-gray-600 dark:text-gray-400 mb-10 max-w-2xl mx-auto leading-relaxed">
+            The ultimate productivity tool for developers. Track your focus time automatically, eliminate distractions, and let AI optimize your workflow for peak performance.
+        </p>
+        <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+            <a href="#" class="w-full sm:w-auto px-8 py-4 bg-gray-900 dark:bg-brand-500 text-white rounded-xl font-medium hover:bg-gray-800 dark:hover:bg-brand-600 transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5">
+                Start Tracking for Free
+            </a>
+            <a href="#demo" class="w-full sm:w-auto px-8 py-4 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-xl font-medium border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition-all flex items-center justify-center gap-2">
+                <svg class="w-5 h-5 text-gray-700 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                Watch Demo
+            </a>
+        </div>
+        <p class="mt-6 text-sm text-gray-500 dark:text-gray-400">No credit card required. 14-day free trial.</p>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section id="features" class="py-24 bg-white dark:bg-gray-900 px-4 border-y border-gray-100 dark:border-gray-800 transition-colors duration-300">
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center max-w-2xl mx-auto mb-16">
+            <h2 class="text-sm font-bold text-brand-600 dark:text-brand-400 uppercase tracking-wider mb-2">Features</h2>
+            <h3 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">Everything you need to focus</h3>
+            <p class="text-lg text-gray-600 dark:text-gray-400">Built specifically for developers to minimize distractions and maximize deep work sessions.</p>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <!-- Feature 1 -->
+            <div class="p-6 rounded-2xl bg-gray-50 dark:bg-gray-800/50 border border-gray-100 dark:border-gray-800 hover:border-brand-200 dark:hover:border-brand-500/50 hover:shadow-md transition-all group">
+                <div class="w-12 h-12 bg-white dark:bg-gray-800 rounded-xl flex items-center justify-center border border-gray-200 dark:border-gray-700 shadow-sm mb-6 group-hover:bg-brand-50 dark:group-hover:bg-brand-900/20 group-hover:border-brand-100 dark:group-hover:border-brand-500/30 group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors">
+                    <svg class="w-6 h-6 text-gray-700 dark:text-gray-400 group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+                <h4 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Auto-Tracking</h4>
+                <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">Silently runs in the background. Automatically detects when you are coding vs browsing.</p>
+            </div>
+
+            <!-- Feature 2 -->
+            <div class="p-6 rounded-2xl bg-gray-50 dark:bg-gray-800/50 border border-gray-100 dark:border-gray-800 hover:border-brand-200 dark:hover:border-brand-500/50 hover:shadow-md transition-all group">
+                <div class="w-12 h-12 bg-white dark:bg-gray-800 rounded-xl flex items-center justify-center border border-gray-200 dark:border-gray-700 shadow-sm mb-6 group-hover:bg-brand-50 dark:group-hover:bg-brand-900/20 group-hover:border-brand-100 dark:group-hover:border-brand-500/30 group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors">
+                    <svg class="w-6 h-6 text-gray-700 dark:text-gray-400 group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                </div>
+                <h4 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Distraction Blocker</h4>
+                <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">Automatically blocks social media and distracting sites when you enter a deep work session.</p>
+            </div>
+
+            <!-- Feature 3 -->
+            <div class="p-6 rounded-2xl bg-gray-50 dark:bg-gray-800/50 border border-gray-100 dark:border-gray-800 hover:border-brand-200 dark:hover:border-brand-500/50 hover:shadow-md transition-all group">
+                <div class="w-12 h-12 bg-white dark:bg-gray-800 rounded-xl flex items-center justify-center border border-gray-200 dark:border-gray-700 shadow-sm mb-6 group-hover:bg-brand-50 dark:group-hover:bg-brand-900/20 group-hover:border-brand-100 dark:group-hover:border-brand-500/30 group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors">
+                    <svg class="w-6 h-6 text-gray-700 dark:text-gray-400 group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                </div>
+                <h4 class="text-lg font-bold text-gray-900 dark:text-white mb-2">AI Insights</h4>
+                <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">Get personalized recommendations on when to take breaks and your most productive hours.</p>
+            </div>
+
+            <!-- Feature 4 -->
+            <div class="p-6 rounded-2xl bg-gray-50 dark:bg-gray-800/50 border border-gray-100 dark:border-gray-800 hover:border-brand-200 dark:hover:border-brand-500/50 hover:shadow-md transition-all group">
+                <div class="w-12 h-12 bg-white dark:bg-gray-800 rounded-xl flex items-center justify-center border border-gray-200 dark:border-gray-700 shadow-sm mb-6 group-hover:bg-brand-50 dark:group-hover:bg-brand-900/20 group-hover:border-brand-100 dark:group-hover:border-brand-500/30 group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors">
+                    <svg class="w-6 h-6 text-gray-700 dark:text-gray-400 group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                </div>
+                <h4 class="text-lg font-bold text-gray-900 dark:text-white mb-2">IDE Integrations</h4>
+                <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">Works seamlessly with VS Code, IntelliJ, and other popular IDEs out of the box.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- How it works -->
+<section id="how-it-works" class="py-24 bg-gray-50 dark:bg-gray-900/50 px-4 transition-colors duration-300">
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center max-w-2xl mx-auto mb-16">
+            <h2 class="text-sm font-bold text-brand-600 dark:text-brand-400 uppercase tracking-wider mb-2">How it works</h2>
+            <h3 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">Three steps to deep work</h3>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-12 relative">
+            <!-- Connecting line for desktop -->
+            <div class="hidden md:block absolute top-12 left-[15%] right-[15%] h-0.5 bg-gradient-to-r from-gray-200 dark:from-gray-800 via-brand-200 dark:via-brand-500/50 to-gray-200 dark:to-gray-800 z-0"></div>
+            
+            <!-- Step 1 -->
+            <div class="relative z-10 flex flex-col items-center text-center">
+                <div class="w-24 h-24 bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 flex items-center justify-center text-2xl font-bold text-brand-500 mb-6 relative">
+                    1
+                    <div class="absolute -right-2 -bottom-2 w-8 h-8 bg-brand-50 dark:bg-brand-900/50 rounded-full border border-brand-100 dark:border-brand-500/30 flex items-center justify-center">
+                        <svg class="w-4 h-4 text-brand-500 dark:text-brand-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
+                    </div>
+                </div>
+                <h4 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Install & Connect</h4>
+                <p class="text-gray-600 dark:text-gray-400">Download the desktop app and connect your favorite IDE in seconds.</p>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="relative z-10 flex flex-col items-center text-center">
+                <div class="w-24 h-24 bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 flex items-center justify-center text-2xl font-bold text-brand-500 mb-6 relative">
+                    2
+                    <div class="absolute -right-2 -bottom-2 w-8 h-8 bg-brand-50 dark:bg-brand-900/50 rounded-full border border-brand-100 dark:border-brand-500/30 flex items-center justify-center">
+                        <svg class="w-4 h-4 text-brand-500 dark:text-brand-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path></svg>
+                    </div>
+                </div>
+                <h4 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Start a Session</h4>
+                <p class="text-gray-600 dark:text-gray-400">Trigger a focus session. We'll mute notifications and block distracting sites.</p>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="relative z-10 flex flex-col items-center text-center">
+                <div class="w-24 h-24 bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 flex items-center justify-center text-2xl font-bold text-brand-500 mb-6 relative">
+                    3
+                    <div class="absolute -right-2 -bottom-2 w-8 h-8 bg-brand-50 dark:bg-brand-900/50 rounded-full border border-brand-100 dark:border-brand-500/30 flex items-center justify-center">
+                        <svg class="w-4 h-4 text-brand-500 dark:text-brand-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                    </div>
+                </div>
+                <h4 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Review Insights</h4>
+                <p class="text-gray-600 dark:text-gray-400">Get an AI-generated summary of your work patterns to optimize tomorrow.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Demo Preview Section -->
+<section id="demo" class="py-24 px-4 bg-white dark:bg-gray-900 relative overflow-hidden transition-colors duration-300">
+    <!-- Background decorative element -->
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-brand-50/50 dark:bg-brand-900/10 rounded-full z-0 pointer-events-none"></div>
+    
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center max-w-2xl mx-auto mb-16 relative z-10">
+            <h2 class="text-sm font-bold text-brand-600 dark:text-brand-400 uppercase tracking-wider mb-2">Dashboard Preview</h2>
+            <h3 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">See where your time goes</h3>
+            <p class="text-lg text-gray-600 dark:text-gray-400">A clean, intuitive interface that gives you total visibility into your focus habits.</p>
+        </div>
+
+        <div class="max-w-5xl mx-auto relative z-10">
+            <!-- App Mockup -->
+            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl dark:shadow-none border border-gray-200 dark:border-gray-700 overflow-hidden transition-colors duration-300">
+                <!-- Mac style window controls -->
+                <div class="bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 px-4 py-3 flex items-center gap-2">
+                    <div class="w-3 h-3 rounded-full bg-red-400 dark:bg-red-500"></div>
+                    <div class="w-3 h-3 rounded-full bg-amber-400 dark:bg-amber-500"></div>
+                    <div class="w-3 h-3 rounded-full bg-green-400 dark:bg-green-500"></div>
+                    <div class="mx-auto text-xs font-medium text-gray-400 dark:text-gray-500 font-mono">app.focusflow.ai</div>
+                </div>
+                
+                <div class="p-8 lg:p-12">
+                    <div class="grid lg:grid-cols-3 gap-8">
+                        <!-- Main stat & Chart -->
+                        <div class="lg:col-span-2 space-y-8">
+                            <div class="flex justify-between items-end border-b border-gray-100 dark:border-gray-700 pb-6">
+                                <div>
+                                    <h3 class="text-gray-500 dark:text-gray-400 font-medium mb-1">Weekly Focus Score</h3>
+                                    <div class="text-5xl font-bold text-gray-900 dark:text-white flex items-baseline gap-2">
+                                        <span id="counter-score" data-target="94">0</span>
+                                        <span class="text-2xl text-brand-500 dark:text-brand-400">/ 100</span>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <span class="inline-flex items-center gap-1 text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/30 px-2 py-1 rounded-md text-sm font-medium">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+                                        +12%
+                                    </span>
+                                    <p class="text-xs text-gray-400 dark:text-gray-500 mt-1">vs last week</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Fake Bar Chart -->
+                            <div class="space-y-4">
+                                <h4 class="text-sm font-bold text-gray-700 dark:text-gray-300">Deep Work Hours</h4>
+                                <div class="h-48 flex items-end gap-3 pt-4">
+                                    <div class="w-full bg-brand-100 dark:bg-gray-700 rounded-t-md h-[40%] hover:bg-brand-200 dark:hover:bg-gray-600 transition-colors"></div>
+                                    <div class="w-full bg-brand-100 dark:bg-gray-700 rounded-t-md h-[60%] hover:bg-brand-200 dark:hover:bg-gray-600 transition-colors"></div>
+                                    <div class="w-full bg-brand-100 dark:bg-gray-700 rounded-t-md h-[45%] hover:bg-brand-200 dark:hover:bg-gray-600 transition-colors"></div>
+                                    <!-- Highlighted Day -->
+                                    <div class="w-full bg-brand-500 rounded-t-md h-[85%] relative group shadow-[0_0_15px_rgba(20,184,166,0.3)] dark:shadow-[0_0_15px_rgba(20,184,166,0.2)]">
+                                        <div class="absolute -top-10 left-1/2 -translate-x-1/2 bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-xs py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity">6.2h</div>
+                                    </div>
+                                    <div class="w-full bg-brand-100 dark:bg-gray-700 rounded-t-md h-[55%] hover:bg-brand-200 dark:hover:bg-gray-600 transition-colors"></div>
+                                    <div class="w-full bg-brand-100 dark:bg-gray-700 rounded-t-md h-[75%] hover:bg-brand-200 dark:hover:bg-gray-600 transition-colors"></div>
+                                    <div class="w-full bg-brand-100 dark:bg-gray-700 rounded-t-md h-[90%] hover:bg-brand-200 dark:hover:bg-gray-600 transition-colors"></div>
+                                </div>
+                                <div class="flex justify-between text-xs text-gray-400 dark:text-gray-500 font-medium">
+                                    <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Sidebar stats -->
+                        <div class="space-y-6">
+                            <!-- Time Tracked Card -->
+                            <div class="bg-gray-50 dark:bg-gray-900/50 p-6 rounded-2xl border border-gray-100 dark:border-gray-700">
+                                <h4 class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">Total Time Tracked</h4>
+                                <p class="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+                                    <span id="counter-hours" data-target="32">0</span>h 
+                                    <span id="counter-mins" data-target="45">0</span>m
+                                </p>
+                                <div class="space-y-2">
+                                    <div class="flex justify-between text-xs font-medium">
+                                        <span class="text-brand-600 dark:text-brand-400">Coding (80%)</span>
+                                        <span class="text-gray-500 dark:text-gray-400">Meetings (20%)</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 overflow-hidden flex">
+                                        <div class="bg-brand-500 h-full w-[80%]"></div>
+                                        <div class="bg-gray-400 dark:bg-gray-500 h-full w-[20%]"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- AI Insight Card -->
+                            <div class="bg-brand-50 dark:bg-brand-900/20 p-6 rounded-2xl border border-brand-100 dark:border-brand-500/30 shadow-sm relative overflow-hidden">
+                                <div class="absolute -right-4 -top-4 w-16 h-16 bg-brand-100 dark:bg-brand-500/20 rounded-full blur-xl opacity-50"></div>
+                                <div class="flex gap-2 items-center mb-3">
+                                    <svg class="w-5 h-5 text-brand-600 dark:text-brand-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                                    <h4 class="text-sm font-bold text-brand-900 dark:text-brand-100">AI Insight</h4>
+                                </div>
+                                <p class="text-sm text-brand-800 dark:text-brand-200 leading-relaxed">
+                                    You consistently achieve peak focus between <span class="font-bold text-brand-900 dark:text-white">9:00 AM</span> and <span class="font-bold text-brand-900 dark:text-white">11:30 AM</span>. Consider blocking your calendar for complex coding tasks during this window tomorrow.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Pricing -->
+<section id="pricing" class="py-24 px-4 bg-gray-50 dark:bg-gray-900/50 border-y border-gray-100 dark:border-gray-800 transition-colors duration-300">
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center max-w-2xl mx-auto mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">Simple, transparent pricing</h2>
+            <p class="text-lg text-gray-600 dark:text-gray-400">Start for free, upgrade when you need more power.</p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto items-center">
+            <!-- Plan 1 -->
+            <div class="border border-gray-200 dark:border-gray-700 rounded-3xl p-8 bg-white dark:bg-gray-800 flex flex-col shadow-sm transition-colors">
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Hobby</h3>
+                <p class="text-gray-500 dark:text-gray-400 text-sm mb-6">For casual developers</p>
+                <div class="mb-6">
+                    <span class="text-4xl font-bold text-gray-900 dark:text-white">$0</span>
+                    <span class="text-gray-500 dark:text-gray-400">/mo</span>
+                </div>
+                <ul class="space-y-4 mb-8 flex-1">
+                    <li class="flex items-center gap-3 text-gray-600 dark:text-gray-300 text-sm">
+                        <svg class="w-5 h-5 text-brand-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        Basic auto-tracking
+                    </li>
+                    <li class="flex items-center gap-3 text-gray-600 dark:text-gray-300 text-sm">
+                        <svg class="w-5 h-5 text-brand-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        Up to 10 focus sessions/mo
+                    </li>
+                    <li class="flex items-center gap-3 text-gray-600 dark:text-gray-300 text-sm">
+                        <svg class="w-5 h-5 text-brand-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        7-day history
+                    </li>
+                </ul>
+                <a href="#" class="w-full block text-center py-3 px-6 rounded-xl border border-gray-200 dark:border-gray-600 text-gray-900 dark:text-white font-medium hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">Get Started Free</a>
+            </div>
+
+            <!-- Plan 2 (Pro) -->
+            <div class="border-2 border-gray-900 dark:border-brand-500 rounded-3xl p-8 bg-gray-900 dark:bg-gray-800 text-white flex flex-col relative shadow-xl md:-my-4 transition-colors">
+                <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-brand-500 text-white px-4 py-1.5 rounded-full text-xs font-bold tracking-wide uppercase">
+                    Most Popular
+                </div>
+                <h3 class="text-xl font-bold mb-2">Pro</h3>
+                <p class="text-gray-400 text-sm mb-6">For professionals & freelancers</p>
+                <div class="mb-6">
+                    <span class="text-4xl font-bold">$12</span>
+                    <span class="text-gray-400">/mo</span>
+                </div>
+                <ul class="space-y-4 mb-8 flex-1">
+                    <li class="flex items-center gap-3 text-gray-300 text-sm">
+                        <svg class="w-5 h-5 text-brand-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        Unlimited tracking & sessions
+                    </li>
+                    <li class="flex items-center gap-3 text-gray-300 text-sm">
+                        <svg class="w-5 h-5 text-brand-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        Advanced distraction blocker
+                    </li>
+                    <li class="flex items-center gap-3 text-gray-300 text-sm">
+                        <svg class="w-5 h-5 text-brand-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        AI Insights & custom reports
+                    </li>
+                    <li class="flex items-center gap-3 text-gray-300 text-sm">
+                        <svg class="w-5 h-5 text-brand-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        Unlimited history
+                    </li>
+                </ul>
+                <a href="#" class="w-full block text-center py-3 px-6 rounded-xl bg-brand-500 text-white font-medium hover:bg-brand-600 transition-colors shadow-lg hover:shadow-xl">Start 14-Day Trial</a>
+            </div>
+
+            <!-- Plan 3 -->
+            <div class="border border-gray-200 dark:border-gray-700 rounded-3xl p-8 bg-white dark:bg-gray-800 flex flex-col shadow-sm transition-colors">
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Team</h3>
+                <p class="text-gray-500 dark:text-gray-400 text-sm mb-6">For engineering teams</p>
+                <div class="mb-6">
+                    <span class="text-4xl font-bold text-gray-900 dark:text-white">$29</span>
+                    <span class="text-gray-500 dark:text-gray-400">/user/mo</span>
+                </div>
+                <ul class="space-y-4 mb-8 flex-1">
+                    <li class="flex items-center gap-3 text-gray-600 dark:text-gray-300 text-sm">
+                        <svg class="w-5 h-5 text-brand-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        Everything in Pro
+                    </li>
+                    <li class="flex items-center gap-3 text-gray-600 dark:text-gray-300 text-sm">
+                        <svg class="w-5 h-5 text-brand-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        Team analytics dashboard
+                    </li>
+                    <li class="flex items-center gap-3 text-gray-600 dark:text-gray-300 text-sm">
+                        <svg class="w-5 h-5 text-brand-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        Burnout detection alerts
+                    </li>
+                    <li class="flex items-center gap-3 text-gray-600 dark:text-gray-300 text-sm">
+                        <svg class="w-5 h-5 text-brand-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        Priority support
+                    </li>
+                </ul>
+                <a href="#" class="w-full block text-center py-3 px-6 rounded-xl border border-gray-200 dark:border-gray-600 text-gray-900 dark:text-white font-medium hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">Contact Sales</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials -->
+<section class="py-24 bg-white dark:bg-gray-900 px-4 transition-colors duration-300">
+    <div class="max-w-5xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-900 dark:text-white mb-12">Loved by developers</h2>
+        <div class="grid md:grid-cols-2 gap-8">
+            <!-- Testimonial 1 -->
+            <div class="bg-gray-50 dark:bg-gray-800 p-8 rounded-2xl border border-gray-100 dark:border-gray-700 transition-colors">
+                <div class="flex items-center gap-1 mb-6 text-amber-400">
+                    <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                    <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                    <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                    <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                    <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                </div>
+                <p class="text-gray-700 dark:text-gray-300 mb-6 text-lg">"FocusFlow AI completely changed how I work. The distraction blocker combined with AI insights helped me realize I'm most productive in the morning. My output has doubled."</p>
+                <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center text-gray-600 dark:text-gray-300 font-bold text-lg">AS</div>
+                    <div>
+                        <h4 class="font-bold text-gray-900 dark:text-white">Alex Smith</h4>
+                        <p class="text-sm text-gray-500 dark:text-gray-400">Senior Frontend Engineer</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Testimonial 2 -->
+            <div class="bg-gray-50 dark:bg-gray-800 p-8 rounded-2xl border border-gray-100 dark:border-gray-700 transition-colors">
+                <div class="flex items-center gap-1 mb-6 text-amber-400">
+                    <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                    <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                    <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                    <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                    <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                </div>
+                <p class="text-gray-700 dark:text-gray-300 mb-6 text-lg">"As a freelancer, time is literally money. Tracking my deep work sessions accurately means I bill more honestly and burn out way less. It's an indispensable tool."</p>
+                <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center text-gray-600 dark:text-gray-300 font-bold text-lg">MJ</div>
+                    <div>
+                        <h4 class="font-bold text-gray-900 dark:text-white">Maria Jones</h4>
+                        <p class="text-sm text-gray-500 dark:text-gray-400">Independent Developer</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-white dark:bg-gray-900 border-t border-gray-100 dark:border-gray-800 py-12 px-4 transition-colors duration-300">
+    <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-5 gap-8 mb-12">
+        <div class="col-span-2">
+            <div class="flex items-center gap-2 mb-4">
+                <div class="w-8 h-8 bg-brand-500 rounded-lg flex items-center justify-center text-white font-bold text-lg">F</div>
+                <span class="font-bold text-lg tracking-tight text-gray-900 dark:text-white">FocusFlow AI</span>
+            </div>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mb-6 max-w-sm leading-relaxed">
+                Empowering developers to achieve deep work, minimize distractions, and optimize productivity through intelligent tracking.
+            </p>
+            <div class="flex gap-4">
+                <a href="#" class="text-gray-400 hover:text-brand-500 dark:hover:text-brand-400 transition-colors">
+                    <span class="sr-only">Twitter</span>
+                    <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"></path></svg>
+                </a>
+                <a href="#" class="text-gray-400 hover:text-brand-500 dark:hover:text-brand-400 transition-colors">
+                    <span class="sr-only">GitHub</span>
+                    <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"></path></svg>
+                </a>
+            </div>
+        </div>
+        
+        <div>
+            <h4 class="font-bold text-gray-900 dark:text-white mb-4">Product</h4>
+            <ul class="space-y-3 text-sm">
+                <li><a href="#features" class="text-gray-500 dark:text-gray-400 hover:text-brand-500 dark:hover:text-brand-400 transition-colors">Features</a></li>
+                <li><a href="#pricing" class="text-gray-500 dark:text-gray-400 hover:text-brand-500 dark:hover:text-brand-400 transition-colors">Pricing</a></li>
+                <li><a href="#" class="text-gray-500 dark:text-gray-400 hover:text-brand-500 dark:hover:text-brand-400 transition-colors">Download Apps</a></li>
+                <li><a href="#" class="text-gray-500 dark:text-gray-400 hover:text-brand-500 dark:hover:text-brand-400 transition-colors">Integrations</a></li>
+            </ul>
+        </div>
+        
+        <div>
+            <h4 class="font-bold text-gray-900 dark:text-white mb-4">Company</h4>
+            <ul class="space-y-3 text-sm">
+                <li><a href="#" class="text-gray-500 dark:text-gray-400 hover:text-brand-500 dark:hover:text-brand-400 transition-colors">About Us</a></li>
+                <li><a href="#" class="text-gray-500 dark:text-gray-400 hover:text-brand-500 dark:hover:text-brand-400 transition-colors">Blog</a></li>
+                <li><a href="#" class="text-gray-500 dark:text-gray-400 hover:text-brand-500 dark:hover:text-brand-400 transition-colors">Careers</a></li>
+                <li><a href="#" class="text-gray-500 dark:text-gray-400 hover:text-brand-500 dark:hover:text-brand-400 transition-colors">Contact</a></li>
+            </ul>
+        </div>
+
+        <div>
+            <h4 class="font-bold text-gray-900 dark:text-white mb-4">Legal</h4>
+            <ul class="space-y-3 text-sm">
+                <li><a href="#" class="text-gray-500 dark:text-gray-400 hover:text-brand-500 dark:hover:text-brand-400 transition-colors">Privacy Policy</a></li>
+                <li><a href="#" class="text-gray-500 dark:text-gray-400 hover:text-brand-500 dark:hover:text-brand-400 transition-colors">Terms of Service</a></li>
+                <li><a href="#" class="text-gray-500 dark:text-gray-400 hover:text-brand-500 dark:hover:text-brand-400 transition-colors">Cookie Policy</a></li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="max-w-7xl mx-auto pt-8 border-t border-gray-100 dark:border-gray-800 flex flex-col md:flex-row items-center justify-between gap-4">
+        <p class="text-sm text-gray-400 dark:text-gray-500">© 2026 FocusFlow AI. All rights reserved.</p>
+        <p class="text-sm text-gray-400 dark:text-gray-500">Designed for developers, everywhere.</p>
+    </div>
+</footer>
+
+<!-- Minimal JavaScript -->
+<script>
+    // 1. Mobile Menu Toggle
+    const btn = document.getElementById('mobile-menu-btn');
+    const menu = document.getElementById('mobile-menu');
+
+    btn.addEventListener('click', () => {
+        menu.classList.toggle('hidden');
+    });
+
+    // Close mobile menu when a link is clicked
+    menu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            menu.classList.add('hidden');
+        });
+    });
+
+    // 2. Simple Number Counter Animation for Demo Section
+    const animateValue = (obj, start, end, duration) => {
+        let startTimestamp = null;
+        const step = (timestamp) => {
+            if (!startTimestamp) startTimestamp = timestamp;
+            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+            // Ease out quad formula
+            const easeProgress = progress * (2 - progress);
+            obj.innerHTML = Math.floor(easeProgress * (end - start) + start);
+            if (progress < 1) {
+                window.requestAnimationFrame(step);
+            }
+        };
+        window.requestAnimationFrame(step);
+    }
+
+    // Use Intersection Observer to trigger counter when section is visible
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.5
+    };
+
+    const counters = document.querySelectorAll('[id^="counter-"]');
+    
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const el = entry.target;
+                const target = parseInt(el.getAttribute('data-target'));
+                // Trigger animation (from 0 to target over 2000ms)
+                animateValue(el, 0, target, 2000);
+                // Stop observing once animated
+                observer.unobserve(el);
+            }
+        });
+    }, observerOptions);
+
+    counters.forEach(counter => observer.observe(counter));
+
+    // 3. Dark Mode Toggle Logic
+    const themeToggleDarkIcons = document.querySelectorAll('#theme-toggle-dark-icon, #theme-toggle-dark-icon-mobile');
+    const themeToggleLightIcons = document.querySelectorAll('#theme-toggle-light-icon, #theme-toggle-light-icon-mobile');
+
+    // Change the icons inside the button based on previous settings
+    if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        themeToggleLightIcons.forEach(icon => icon.classList.remove('hidden'));
+    } else {
+        themeToggleDarkIcons.forEach(icon => icon.classList.remove('hidden'));
+    }
+
+    const themeToggleBtns = document.querySelectorAll('#theme-toggle, #theme-toggle-mobile');
+
+    themeToggleBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            // toggle icons inside button
+            themeToggleDarkIcons.forEach(icon => icon.classList.toggle('hidden'));
+            themeToggleLightIcons.forEach(icon => icon.classList.toggle('hidden'));
+
+            // if set via local storage previously
+            if (localStorage.getItem('color-theme')) {
+                if (localStorage.getItem('color-theme') === 'light') {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('color-theme', 'dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('color-theme', 'light');
+                }
+
+            // if NOT set via local storage previously
+            } else {
+                if (document.documentElement.classList.contains('dark')) {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('color-theme', 'light');
+                } else {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('color-theme', 'dark');
+                }
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
